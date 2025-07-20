@@ -89,6 +89,8 @@ export default function ReviewPage() {
 
     const responseTime = reviewStartTime ? Math.floor((new Date().getTime() - reviewStartTime.getTime()) / 1000) : undefined
 
+    moveToNextCard()
+
     submitReviewMutation.mutate(
       {
         sessionId,
@@ -98,11 +100,8 @@ export default function ReviewPage() {
         responseTime,
       },
       {
-        onSuccess: () => {
-          moveToNextCard()
-        },
         onError: (error) => {
-          showError({ title: 'Error', description: error.message })
+          showError({ title: 'Skip submission failed', description: error.message })
         },
       }
     )
@@ -117,6 +116,8 @@ export default function ReviewPage() {
 
     const responseTime = reviewStartTime ? Math.floor((new Date().getTime() - reviewStartTime.getTime()) / 1000) : undefined
 
+    moveToNextCard()
+
     submitReviewMutation.mutate(
       {
         sessionId,
@@ -126,11 +127,8 @@ export default function ReviewPage() {
         responseTime,
       },
       {
-        onSuccess: () => {
-          moveToNextCard()
-        },
         onError: (error) => {
-          showError({ title: 'Error', description: error.message })
+          showError({ title: 'Review submission failed', description: error.message })
         },
       }
     )
