@@ -5,6 +5,7 @@ import { useToastNotifications } from '@/components/toast'
 import { Box } from '@/components/ui/box'
 import { Button, ButtonText } from '@/components/ui/button'
 import { HStack } from '@/components/ui/hstack'
+import { ScrollView } from '@/components/ui/scroll-view'
 import { Text } from '@/components/ui/text'
 import { VStack } from '@/components/ui/vstack'
 import { trpc } from '@/lib/trpc'
@@ -147,94 +148,8 @@ export default function CreateCardPage() {
                   </Button>
                 </HStack>
               </VStack>
-
-              <VStack className="flex-1 p-6 space-y-6 bg-background-0">
-                <Text className="text-xl font-semibold text-typography-900">
-                  Preview
-                </Text>
-
-                <VStack className="space-y-3">
-                  <Text className="text-sm font-medium text-primary-600 uppercase tracking-wide">
-                    Question
-                  </Text>
-                  <Box className="min-h-[100px] p-4 bg-background-50 rounded-lg border border-outline-200">
-                    {front.trim() ? (
-                      <MarkdownRenderer content={front} />
-                    ) : (
-                      <Text className="text-typography-400 italic">
-                        Question preview will appear here...
-                      </Text>
-                    )}
-                  </Box>
-                </VStack>
-
-                <VStack className="space-y-3">
-                  <Text className="text-sm font-medium text-secondary-600 uppercase tracking-wide">
-                    Answer
-                  </Text>
-                  <Box className="min-h-[120px] p-4 bg-background-50 rounded-lg border border-outline-200">
-                    {back.trim() ? (
-                      <MarkdownRenderer content={back} />
-                    ) : (
-                      <Text className="text-typography-400 italic">
-                        Answer preview will appear here...
-                      </Text>
-                    )}
-                  </Box>
-                </VStack>
-
-                {hint.trim() && (
-                  <VStack className="space-y-3">
-                    <Text className="text-sm font-medium text-tertiary-600 uppercase tracking-wide">
-                      Hint
-                    </Text>
-                    <Box className="p-3 bg-tertiary-50 rounded-lg border border-tertiary-200">
-                      <MarkdownRenderer content={`💡 ${hint}`} className="text-sm text-tertiary-700" />
-                    </Box>
-                  </VStack>
-                )}
-              </VStack>
-            </HStack>
-          ) : (
-            <VStack className="flex-1 p-4 space-y-4">
-              {!showPreview ? (
-                <>
-                  <Text className="text-xl font-semibold text-typography-900">
-                    Create Card
-                  </Text>
-
-                  <MarkdownEditor
-                    value={front}
-                    onChangeText={setFront}
-                    label="Question (Front of card)"
-                    placeholder="Enter the question with **bold**, *italic*, `code` etc."
-                  />
-
-                  <MarkdownEditor
-                    value={back}
-                    onChangeText={setBack}
-                    label="Answer (Back of card)"
-                    placeholder="Enter the answer with formatting, `code`, > quotes etc."
-                  />
-
-                  <MarkdownEditor
-                    value={hint}
-                    onChangeText={setHint}
-                    label="Hint (Optional)"
-                    placeholder="Enter a helpful hint with formatting"
-                  />
-
-                  <Button
-                    action="primary"
-                    onPress={handleSaveAndAddAnother}
-                    disabled={createCardMutation.isPending || !front.trim() || !back.trim()}
-                  >
-                    <Plus size={16} color="rgb(var(--color-background-0))" />
-                    <ButtonText className="ml-1">Save & Add Another</ButtonText>
-                  </Button>
-                </>
-              ) : (
-                <>
+              <ScrollView>
+                <VStack className="flex-1 p-6 space-y-6 bg-background-0">
                   <Text className="text-xl font-semibold text-typography-900">
                     Preview
                   </Text>
@@ -243,7 +158,7 @@ export default function CreateCardPage() {
                     <Text className="text-sm font-medium text-primary-600 uppercase tracking-wide">
                       Question
                     </Text>
-                    <Box className="min-h-[100px] p-4 bg-background-0 rounded-lg border border-outline-200">
+                    <Box className="min-h-[100px] p-4 bg-background-50 rounded-lg border border-outline-200">
                       {front.trim() ? (
                         <MarkdownRenderer content={front} />
                       ) : (
@@ -258,7 +173,7 @@ export default function CreateCardPage() {
                     <Text className="text-sm font-medium text-secondary-600 uppercase tracking-wide">
                       Answer
                     </Text>
-                    <Box className="min-h-[120px] p-4 bg-background-0 rounded-lg border border-outline-200">
+                    <Box className="min-h-[120px] p-4 bg-background-50 rounded-lg border border-outline-200">
                       {back.trim() ? (
                         <MarkdownRenderer content={back} />
                       ) : (
@@ -279,9 +194,100 @@ export default function CreateCardPage() {
                       </Box>
                     </VStack>
                   )}
-                </>
-              )}
-            </VStack>
+                </VStack>
+              </ScrollView>
+            </HStack>
+          ) : (
+            <ScrollView>
+
+              <VStack className="flex-1 p-4 space-y-4">
+                {!showPreview ? (
+                  <>
+                    <Text className="text-xl font-semibold text-typography-900">
+                      Create Card
+                    </Text>
+
+                    <MarkdownEditor
+                      value={front}
+                      onChangeText={setFront}
+                      label="Question (Front of card)"
+                      placeholder="Enter the question with **bold**, *italic*, `code` etc."
+                    />
+
+                    <MarkdownEditor
+                      value={back}
+                      onChangeText={setBack}
+                      label="Answer (Back of card)"
+                      placeholder="Enter the answer with formatting, `code`, > quotes etc."
+                    />
+
+                    <MarkdownEditor
+                      value={hint}
+                      onChangeText={setHint}
+                      label="Hint (Optional)"
+                      placeholder="Enter a helpful hint with formatting"
+                    />
+
+                    <Button
+                      action="primary"
+                      onPress={handleSaveAndAddAnother}
+                      disabled={createCardMutation.isPending || !front.trim() || !back.trim()}
+                    >
+                      <Plus size={16} color="rgb(var(--color-background-0))" />
+                      <ButtonText className="ml-1">Save & Add Another</ButtonText>
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Text className="text-xl font-semibold text-typography-900">
+                      Preview
+                    </Text>
+
+                    <VStack className="space-y-3">
+                      <Text className="text-sm font-medium text-primary-600 uppercase tracking-wide">
+                        Question
+                      </Text>
+                      <Box className="min-h-[100px] p-4 bg-background-0 rounded-lg border border-outline-200">
+                        {front.trim() ? (
+                          <MarkdownRenderer content={front} />
+                        ) : (
+                          <Text className="text-typography-400 italic">
+                            Question preview will appear here...
+                          </Text>
+                        )}
+                      </Box>
+                    </VStack>
+
+                    <VStack className="space-y-3">
+                      <Text className="text-sm font-medium text-secondary-600 uppercase tracking-wide">
+                        Answer
+                      </Text>
+                      <Box className="min-h-[120px] p-4 bg-background-0 rounded-lg border border-outline-200">
+                        {back.trim() ? (
+                          <MarkdownRenderer content={back} />
+                        ) : (
+                          <Text className="text-typography-400 italic">
+                            Answer preview will appear here...
+                          </Text>
+                        )}
+                      </Box>
+                    </VStack>
+
+                    {hint.trim() && (
+                      <VStack className="space-y-3">
+                        <Text className="text-sm font-medium text-tertiary-600 uppercase tracking-wide">
+                          Hint
+                        </Text>
+                        <Box className="p-3 bg-tertiary-50 rounded-lg border border-tertiary-200">
+                          <MarkdownRenderer content={`💡 ${hint}`} className="text-sm text-tertiary-700" />
+                        </Box>
+                      </VStack>
+                    )}
+                  </>
+                )}
+              </VStack>
+            </ScrollView>
+
           )}
         </Box>
       </VStack>
