@@ -44,7 +44,6 @@ export default function DeckDetailPage() {
     { enabled: !!id }
   )
 
-  const utils = trpc.useUtils()
   const {
     createCard,
     updateCard,
@@ -129,7 +128,7 @@ export default function DeckDetailPage() {
     return (
       <SafeAreaView className="flex-1">
         <Box className="flex-1 justify-center items-center p-6">
-          <Text className="text-red-500 text-center mb-4">
+          <Text className="text-error-500 text-center mb-4">
             Failed to load deck: {error.message}
           </Text>
           <Button onPress={() => router.back()}>
@@ -149,9 +148,9 @@ export default function DeckDetailPage() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-background-50">
       <VStack className="flex-1">
-        <Box className="bg-white border-b border-gray-200 p-6">
+        <Box className="bg-background-0 border-b border-outline-200 p-6">
           <HStack className="justify-between items-center mb-4">
             <BackButton />
             <Button
@@ -160,7 +159,7 @@ export default function DeckDetailPage() {
               onPress={() => setShowDeleteDeckDialog(true)}
             >
               <Trash2Icon size={16} color="#ef4444" />
-              <ButtonText className="text-red-500 ml-1">Delete Deck</ButtonText>
+              <ButtonText className="text-error-500 ml-1">Delete Deck</ButtonText>
             </Button>
           </HStack>
 
@@ -170,11 +169,11 @@ export default function DeckDetailPage() {
                 className="w-6 h-6 rounded-full"
                 style={{ backgroundColor: deck.color ?? '#3b82f6' }}
               />
-              <Text className="text-2xl font-bold text-gray-900">{deck.title}</Text>
+              <Text className="text-2xl font-bold text-typography-900">{deck.title}</Text>
             </HStack>
 
             {deck.description && (
-              <Text className="text-gray-600">{deck.description}</Text>
+              <Text className="text-typography-600">{deck.description}</Text>
             )}
           </VStack>
         </Box>
@@ -185,24 +184,24 @@ export default function DeckDetailPage() {
             <HStack className="space-x-6 flex-1">
               <VStack className="w-80 space-y-4">
                 {stats && (
-                  <Box className="bg-white p-4 rounded-lg border border-gray-200">
+                  <Box className="bg-background-0 p-4 rounded-lg border border-outline-200">
                     <Text className="text-lg font-semibold mb-3">Deck Statistics</Text>
                     <VStack className="space-y-2">
                       <HStack className="justify-between">
-                        <Text className="text-gray-600">Total Cards:</Text>
+                        <Text className="text-typography-600">Total Cards:</Text>
                         <Text className="font-medium">{stats.totalCards}</Text>
                       </HStack>
                       <HStack className="justify-between">
-                        <Text className="text-gray-600">Reviewed:</Text>
+                        <Text className="text-typography-600">Reviewed:</Text>
                         <Text className="font-medium">{stats.reviewedCards}</Text>
                       </HStack>
                       <HStack className="justify-between">
-                        <Text className="text-gray-600">Not Reviewed:</Text>
+                        <Text className="text-typography-600">Not Reviewed:</Text>
                         <Text className="font-medium">{stats.unReviewedCards}</Text>
                       </HStack>
                       {stats.totalReviews > 0 && (
                         <HStack className="justify-between">
-                          <Text className="text-gray-600">Accuracy:</Text>
+                          <Text className="text-typography-600">Accuracy:</Text>
                           <Text className="font-medium">{stats.accuracy}%</Text>
                         </HStack>
                       )}
@@ -243,23 +242,23 @@ export default function DeckDetailPage() {
                   <>
                     <VStack className="space-y-2 flex-1">
                       {paginatedCards.map((card) => (
-                        <Box key={card.id} className="bg-white p-4 rounded-lg border border-gray-200">
+                        <Box key={card.id} className="bg-background-0 p-4 rounded-lg border border-outline-200">
                           <HStack className="items-start space-x-3">
                             <VStack className="flex-1">
-                              <Text className="font-medium text-gray-900 leading-relaxed">
+                              <Text className="font-medium text-typography-900 leading-relaxed">
                                 {card.front}
                               </Text>
                             </VStack>
                             <HStack className="space-x-3">
                               <Pressable 
                                 onPress={() => handleEditCard(card)}
-                                className="p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200"
+                                className="p-2 rounded-lg hover:bg-background-100 active:bg-background-200"
                               >
                                 <EditIcon size={24} color="#6b7280" />
                               </Pressable>
                               <Pressable 
                                 onPress={() => handleDeleteCard(card)}
-                                className="p-2 rounded-lg hover:bg-red-50 active:bg-red-100"
+                                className="p-2 rounded-lg hover:bg-error-50 active:bg-error-100"
                               >
                                 <Trash2Icon size={24} color="#ef4444" />
                               </Pressable>
@@ -305,7 +304,7 @@ export default function DeckDetailPage() {
             // Mobile Layout: Vertical
             <VStack className="space-y-4 flex-1">
               {stats && (
-                <Box className="bg-white p-4 rounded-lg border border-gray-200">
+                <Box className="bg-background-0 p-4 rounded-lg border border-outline-200">
                   <Text className="text-lg font-semibold mb-3">Deck Statistics</Text>
                   <VStack className="space-y-2">
                     <HStack className="justify-between">

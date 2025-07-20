@@ -12,11 +12,12 @@ export const BackButton = () => {
         <Button
             variant="solid"
             onPress={() => router.back()}
-            className="px-4 py-2 rounded bg-blue-500"
+            action="primary"
+            className="px-4 py-2 rounded"
         >
             <HStack className="gap-2 items-center">
-                <Undo2 size={18} color="white" />
-                <Text className="text-lg text-white font-bold">Back</Text>
+                <Undo2 size={18} color="rgb(var(--color-background-0))" />
+                <Text className="text-lg text-background-0 font-bold">Back</Text>
             </HStack>
         </Button>
     )

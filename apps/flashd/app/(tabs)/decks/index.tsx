@@ -34,14 +34,14 @@ const deckSchema = z.object({
 type DeckFormData = z.infer<typeof deckSchema>
 
 const DECK_COLORS = [
-  '#3b82f6', // Blue
-  '#ef4444', // Red
-  '#10b981', // Green
-  '#f59e0b', // Yellow
-  '#8b5cf6', // Purple
-  '#06b6d4', // Cyan
-  '#f97316', // Orange
-  '#84cc16', // Lime
+  'rgb(var(--color-primary-500))', // Coral Pink
+  'rgb(var(--color-secondary-500))', // Rose
+  'rgb(var(--color-tertiary-500))', // Peachy Coral
+  'rgb(var(--color-info-500))', // Blue
+  'rgb(var(--color-success-500))', // Green
+  'rgb(var(--color-warning-500))', // Orange
+  'rgb(var(--color-primary-300))', // Light Coral
+  'rgb(var(--color-secondary-300))', // Light Rose
 ]
 
 interface DeckCardProps {
@@ -74,56 +74,56 @@ function DeckCard({ deck, onPress, onEdit, onDelete }: DeckCardProps) {
     <Box className="relative w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 p-2">
       <Pressable
         onPress={onPress}
-        className="bg-white rounded-xl border border-gray-200 shadow-sm w-full h-48"
+        className="bg-background-0 rounded-xl border border-outline-200 shadow-sm w-full h-48"
       >
         <VStack className="flex-1 p-4">
           <HStack className="justify-between items-start mb-3">
             <HStack className="flex-1 items-center space-x-3">
               <Box
                 className="w-4 h-4 rounded-full flex-shrink-0"
-                style={{ backgroundColor: deck.color ?? '#3b82f6' }}
+                style={{ backgroundColor: deck.color ?? 'rgb(var(--color-primary-500))' }}
               />
-              <Text className="text-sm font-bold text-gray-900 flex-1" numberOfLines={1}>
+              <Text className="text-sm font-bold text-typography-900 flex-1" numberOfLines={1}>
                 {deck.title}
               </Text>
             </HStack>
             <Pressable
               onPress={(e) => handleEdit(e)}
-              className="p-1 -m-1 ml-2 rounded-full hover:bg-blue-100 dark:hover:bg-blue-900/20 transition-colors duration-200 group"
+              className="p-1 -m-1 ml-2 rounded-full hover:bg-primary-100 transition-colors duration-200 group"
             >
               <SquarePen
                 size={16}
-                className="text-gray-500 group-hover:text-blue-500 transition-colors duration-200"
+                className="text-typography-500 group-hover:text-primary-500 transition-colors duration-200"
               />
             </Pressable>
             <Pressable
               onPress={(e) => handleDelete(e)}
-              className="p-1 -m-1 ml-2 rounded-full hover:bg-red-100 dark:hover:bg-red-900/20 transition-colors duration-200 group"
+              className="p-1 -m-1 ml-2 rounded-full hover:bg-error-100 transition-colors duration-200 group"
             >
               <Trash2
                 size={16}
-                className="text-gray-500 group-hover:text-red-500 transition-colors duration-200"
+                className="text-typography-500 group-hover:text-error-500 transition-colors duration-200"
               />
             </Pressable>
           </HStack>
 
           <Box className="flex-1 justify-start mb-3">
             {deck.description ? (
-              <Text className="text-xs text-gray-600" numberOfLines={4}>
+              <Text className="text-xs text-typography-600" numberOfLines={4}>
                 {deck.description}
               </Text>
             ) : (
-              <Text className="text-xs text-gray-400 italic">
+              <Text className="text-xs text-typography-400 italic">
                 No description
               </Text>
             )}
           </Box>
 
           <HStack className="justify-between items-center">
-            <Text className="text-xs font-medium text-gray-900">
+            <Text className="text-xs font-medium text-typography-900">
               {deck.cardCount} {deck.cardCount === 1 ? 'card' : 'cards'}
             </Text>
-            <Text className="text-xs text-gray-400">
+            <Text className="text-xs text-typography-400">
               {formatDate(deck.updatedAt)}
             </Text>
           </HStack>
@@ -194,13 +194,13 @@ function DeckFormModal({ visible, onClose, onSubmit, deck, isLoading }: DeckForm
           />
 
           <VStack className="space-y-2">
-            <Text className="text-sm font-medium text-gray-700">Deck Color</Text>
+            <Text className="text-sm font-medium text-typography-700">Deck Color</Text>
             <HStack className="flex-wrap gap-3">
               {DECK_COLORS.map((color) => (
                 <Pressable
                   key={color}
                   onPress={() => setSelectedColor(color)}
-                  className={`w-8 h-8 rounded-full border-2 ${selectedColor === color ? 'border-gray-400' : 'border-gray-200'
+                  className={`w-8 h-8 rounded-full border-2 ${selectedColor === color ? 'border-outline-400' : 'border-outline-200'
                     }`}
                   style={{ backgroundColor: color }}
                 />
@@ -306,16 +306,16 @@ function DecksContent() {
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-50">
+    <SafeAreaView className="flex-1 bg-background-50">
       <VStack className="flex-1">
-        <HStack className="justify-between items-center p-6 bg-white border-b border-gray-200">
-          <Text className="text-2xl font-bold text-gray-900">My Decks</Text>
+        <HStack className="justify-between items-center p-6 bg-background-0 border-b border-outline-200">
+          <Text className="text-2xl font-bold text-typography-900">My Decks</Text>
           <Button
             onPress={() => setShowCreateModal(true)}
             size="sm"
-            className="bg-blue-500"
+            action="primary"
           >
-            <PlusIcon size={16} color="white" />
+            <PlusIcon size={16} color="rgb(var(--color-background-0))" />
             <ButtonText className="ml-1">New Deck</ButtonText>
           </Button>
         </HStack>
@@ -331,7 +331,7 @@ function DecksContent() {
               description="Create your first flashcard deck to start learning!"
               actionText="Create Your First Deck"
               onAction={() => setShowCreateModal(true)}
-              icon={<PlusIcon size={48} color="#9ca3af" />}
+              icon={<PlusIcon size={48} color="rgb(var(--color-typography-400))" />}
             />
           ) : (
             <ScrollView
@@ -341,7 +341,7 @@ function DecksContent() {
                 <RefreshControl
                   refreshing={isLoading}
                   onRefresh={refetch}
-                  colors={['#3b82f6']}
+                  colors={['rgb(var(--color-primary-500))']}
                 />
               }
               showsVerticalScrollIndicator={false}

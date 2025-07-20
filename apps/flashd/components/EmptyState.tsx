@@ -32,12 +32,12 @@ export function EmptyState({
           </Box>
         )}
         
-        <Text className="text-xl font-semibold text-gray-700 text-center">
+        <Text className="text-xl font-semibold text-typography-700 text-center">
           {title}
         </Text>
         
         {description && (
-          <Text className="text-gray-500 text-center">
+          <Text className="text-typography-500 text-center">
             {description}
           </Text>
         )}
@@ -46,7 +46,8 @@ export function EmptyState({
           <Button
             onPress={onAction}
             size="lg"
-            className="bg-blue-500 mt-4"
+            action="primary"
+            className="mt-4"
             disabled={isLoading}
           >
             <ButtonText>

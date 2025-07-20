@@ -24,7 +24,7 @@ export function DesktopSidebar() {
   }
 
   return (
-    <Box className="w-64 bg-gray-50 border-r border-gray-200">
+    <Box className="w-64 bg-background-50 border-r border-outline-200">
       <VStack className="p-4 space-y-2">
         <Text className="text-xl font-bold mb-6 px-3">My App</Text>
 
@@ -35,15 +35,15 @@ export function DesktopSidebar() {
             <Pressable
               key={tab.name}
               onPress={() => handleTabPress(tab.route)}
-              className={`rounded-lg p-3 ${isActive ? 'bg-blue-100' : 'hover:bg-gray-100'}`}
+              className={`rounded-lg p-3 ${isActive ? 'bg-primary-100' : 'hover:bg-background-100'}`}
             >
               <HStack className="items-center space-x-3">
                 <Icon
                   as={tab.icon}
                   size="md"
-                  className={isActive ? 'text-blue-600' : 'text-gray-600'}
+                  className={isActive ? 'text-primary-600' : 'text-typography-600'}
                 />
-                <Text className={`${isActive ? 'text-blue-600 font-semibold' : 'text-gray-600'}`}>
+                <Text className={`${isActive ? 'text-primary-600 font-semibold' : 'text-typography-600'}`}>
                   {tab.label}
                 </Text>
               </HStack>

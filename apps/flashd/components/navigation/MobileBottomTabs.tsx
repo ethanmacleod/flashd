@@ -26,7 +26,7 @@ export function MobileBottomTabs() {
   }
 
   return (
-    <Box className="border-t border-gray-200 bg-white" style={{ paddingBottom: insets.bottom }}>
+    <Box className="border-t border-outline-200 bg-background-0" style={{ paddingBottom: insets.bottom }}>
       <HStack className="justify-around py-2">
         {tabs.map((tab) => {
           const isActive = getIsActive(tab.name)
@@ -37,11 +37,11 @@ export function MobileBottomTabs() {
                 <Icon
                   as={tab.icon}
                   size="md"
-                  className={isActive ? 'text-blue-600' : 'text-gray-400'}
+                  className={isActive ? 'text-primary-600' : 'text-typography-400'}
                 />
                 <Text
                   className={`text-xs mt-1 ${
-                    isActive ? 'text-blue-600 font-semibold' : 'text-gray-400'
+                    isActive ? 'text-primary-600 font-semibold' : 'text-typography-400'
                   }`}
                 >
                   {tab.label}

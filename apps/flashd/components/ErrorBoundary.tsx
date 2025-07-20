@@ -34,10 +34,10 @@ export class ErrorBoundary extends Component<Props, State> {
 
       return (
         <View className="flex-1 justify-center items-center p-4">
-          <Text className="text-lg font-semibold text-red-600 mb-2">
+          <Text className="text-lg font-semibold text-error-600 mb-2">
             Something went wrong
           </Text>
-          <Text className="text-gray-600 text-center mb-4">
+          <Text className="text-typography-600 text-center mb-4">
             {this.state.error?.message || 'An unexpected error occurred'}
           </Text>
           <Button

@@ -16,11 +16,11 @@ export function QueryErrorFallback({ error, onRetry, isLoading }: QueryErrorFall
   if (isAuthError) {
     return (
       <View className="flex-1 justify-center items-center p-4">
-        <AlertCircle size={48} color="#ef4444" />
-        <Text className="text-lg font-semibold text-red-600 mb-2 mt-4">
+        <AlertCircle size={48} color="rgb(var(--color-error-500))" />
+        <Text className="text-lg font-semibold text-error-600 mb-2 mt-4">
           Authentication Required
         </Text>
-        <Text className="text-gray-600 text-center mb-4">
+        <Text className="text-typography-600 text-center mb-4">
           Please sign in to continue
         </Text>
         <Button onPress={() => {/* Navigate to sign in */ }}>
@@ -33,11 +33,11 @@ export function QueryErrorFallback({ error, onRetry, isLoading }: QueryErrorFall
   if (isNetworkError) {
     return (
       <View className="flex-1 justify-center items-center p-4">
-        <WifiOff size={48} color="#ef4444" />
-        <Text className="text-lg font-semibold text-red-600 mb-2 mt-4">
+        <WifiOff size={48} color="rgb(var(--color-error-500))" />
+        <Text className="text-lg font-semibold text-error-600 mb-2 mt-4">
           Connection Error
         </Text>
-        <Text className="text-gray-600 text-center mb-4">
+        <Text className="text-typography-600 text-center mb-4">
           Check your internet connection and try again
         </Text>
         <Button onPress={onRetry} disabled={isLoading}>
@@ -49,11 +49,11 @@ export function QueryErrorFallback({ error, onRetry, isLoading }: QueryErrorFall
 
   return (
     <View className="flex-1 justify-center items-center p-4">
-      <AlertCircle size={48} color="#ef4444" />
-      <Text className="text-lg font-semibold text-red-600 mb-2 mt-4">
+      <AlertCircle size={48} color="rgb(var(--color-error-500))" />
+      <Text className="text-lg font-semibold text-error-600 mb-2 mt-4">
         Something went wrong
       </Text>
-      <Text className="text-gray-600 text-center mb-4">
+      <Text className="text-typography-600 text-center mb-4">
         {error.message}
       </Text>
       <Button onPress={onRetry} disabled={isLoading}>

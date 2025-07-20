@@ -14,7 +14,7 @@ export interface LoadingSpinnerProps {
 
 export function LoadingSpinner({
   size = 'large',
-  color = '#3b82f6',
+  color = 'rgb(var(--color-primary-500))',
   message,
   fullScreen = true,
   className,
@@ -27,7 +27,7 @@ export function LoadingSpinner({
     <VStack className="items-center space-y-4">
       <Spinner size={size} color={color} />
       {message && (
-        <Text className="text-gray-500 text-center max-w-sm">
+        <Text className="text-typography-500 text-center max-w-sm">
           {message}
         </Text>
       )}
@@ -52,7 +52,7 @@ export function LoadingSpinner({
 // Convenience component for inline loading
 export function InlineSpinner({ 
   size = 'small', 
-  color = '#3b82f6' 
+  color = 'rgb(var(--color-primary-500))' 
 }: Pick<LoadingSpinnerProps, 'size' | 'color'>) {
   return (
     <LoadingSpinner 
