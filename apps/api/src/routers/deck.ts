@@ -275,4 +275,218 @@ export const deckRouter = router({
       await db.card.delete({ where: { id: input.id } })
       return { success: true }
     }),
+
+  startReviewSession: publicProcedure
+    .use(isAuth)
+    .input(z.object({ deckId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const deck = await db.deck.findFirst({
+        where: { id: input.deckId, userId: ctx.user.id },
+        include: {
+          cards: true,
+        },
+      })
+
+      if (!deck) throw new TRPCError({ code: 'BAD_REQUEST', message: 'Deck not found' })
+      if (deck.cards.length === 0)
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Deck has no cards' })
+
+      const shuffledCards = [...deck.cards].sort(() => Math.random() - 0.5)
+
+      const reviewSession = await db.reviewSession.create({
+        data: {
+          deckId: input.deckId,
+          userId: ctx.user.id,
+          totalCards: deck.cards.length,
+        },
+      })
+
+      return {
+        sessionId: reviewSession.id,
+        cards: shuffledCards.map((card, index) => ({
+          id: card.id,
+          front: card.front,
+          back: card.back,
+          hint: card.hint,
+          order: index,
+        })),
+        totalCards: deck.cards.length,
+      }
+    }),
+
+  submitCardReview: publicProcedure
+    .use(isAuth)
+    .input(
+      z.object({
+        sessionId: z.string(),
+        cardId: z.string(),
+        difficulty: z.number().min(1).max(5),
+        wasSkipped: z.boolean().default(false),
+        wasFavorited: z.boolean().default(false),
+        responseTime: z.number().optional(),
+      }),
+    )
+    .mutation(async ({ input, ctx }) => {
+      const session = await db.reviewSession.findFirst({
+        where: { id: input.sessionId, userId: ctx.user.id },
+        include: { deck: true },
+      })
+
+      if (!session)
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Review session not found' })
+
+      const card = await db.card.findFirst({
+        where: { id: input.cardId, deckId: session.deckId },
+      })
+
+      if (!card) throw new TRPCError({ code: 'BAD_REQUEST', message: 'Card not found in deck' })
+
+      await db.reviewLog.create({
+        data: {
+          cardId: input.cardId,
+          reviewSessionId: input.sessionId,
+          difficulty: input.difficulty,
+          wasSkipped: input.wasSkipped,
+          wasFavorited: input.wasFavorited,
+          responseTime: input.responseTime,
+        },
+      })
+
+      const now = new Date()
+      await db.card.update({
+        where: { id: input.cardId },
+        data: {
+          lastReviewed: now,
+          reviewCount: { increment: 1 },
+          correctCount: input.difficulty <= 3 ? { increment: 1 } : undefined,
+          isFavorite: input.wasFavorited,
+          difficulty: input.difficulty,
+        },
+      })
+
+      const updatedSession = await db.reviewSession.update({
+        where: { id: input.sessionId },
+        data: {
+          reviewedCards: { increment: 1 },
+          correctAnswers: input.difficulty <= 3 ? { increment: 1 } : undefined,
+          skippedCards: input.wasSkipped ? { increment: 1 } : undefined,
+        },
+        include: {
+          reviews: {
+            select: { difficulty: true },
+          },
+        },
+      })
+
+      if (updatedSession.reviews.length > 0) {
+        const avgDifficulty =
+          updatedSession.reviews.reduce((sum, review) => sum + review.difficulty, 0) /
+          updatedSession.reviews.length
+        await db.reviewSession.update({
+          where: { id: input.sessionId },
+          data: { averageDifficulty: avgDifficulty },
+        })
+      }
+
+      return { success: true }
+    }),
+
+  completeReviewSession: publicProcedure
+    .use(isAuth)
+    .input(z.object({ sessionId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const session = await db.reviewSession.findFirst({
+        where: { id: input.sessionId, userId: ctx.user.id },
+      })
+
+      if (!session)
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Review session not found' })
+
+      await db.reviewSession.update({
+        where: { id: input.sessionId },
+        data: { completedAt: new Date() },
+      })
+
+      return { success: true }
+    }),
+
+  getReviewSessionStats: publicProcedure
+    .use(isAuth)
+    .input(z.object({ sessionId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const session = await db.reviewSession.findFirst({
+        where: { id: input.sessionId, userId: ctx.user.id },
+        include: {
+          reviews: {
+            include: {
+              card: {
+                select: { front: true },
+              },
+            },
+          },
+          deck: {
+            select: { title: true },
+          },
+        },
+      })
+
+      if (!session)
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Review session not found' })
+
+      const difficultCards = session.reviews.filter((review) => review.difficulty >= 4)
+      const favoriteCards = session.reviews.filter((review) => review.wasFavorited)
+      const skippedCards = session.reviews.filter((review) => review.wasSkipped)
+
+      return {
+        sessionId: session.id,
+        deckTitle: session.deck.title,
+        totalCards: session.totalCards,
+        reviewedCards: session.reviewedCards,
+        correctAnswers: session.correctAnswers,
+        skippedCards: session.skippedCards,
+        averageDifficulty: session.averageDifficulty,
+        accuracy:
+          session.reviewedCards > 0 ? (session.correctAnswers / session.reviewedCards) * 100 : 0,
+        startedAt: session.startedAt,
+        completedAt: session.completedAt,
+        difficultCards: difficultCards.map((review) => ({
+          id: review.cardId,
+          front: review.card.front,
+          difficulty: review.difficulty,
+        })),
+        favoriteCards: favoriteCards.map((review) => ({
+          id: review.cardId,
+          front: review.card.front,
+        })),
+        skippedCardCount: skippedCards.length,
+      }
+    }),
+
+  getDifficultCardsForRetry: publicProcedure
+    .use(isAuth)
+    .input(z.object({ sessionId: z.string() }))
+    .query(async ({ input, ctx }) => {
+      const session = await db.reviewSession.findFirst({
+        where: { id: input.sessionId, userId: ctx.user.id },
+        include: {
+          reviews: {
+            where: { difficulty: { gte: 4 } },
+            include: {
+              card: true,
+            },
+          },
+        },
+      })
+
+      if (!session)
+        throw new TRPCError({ code: 'BAD_REQUEST', message: 'Review session not found' })
+
+      return session.reviews.map((review, index) => ({
+        id: review.card.id,
+        front: review.card.front,
+        back: review.card.back,
+        hint: review.card.hint,
+        order: index,
+      }))
+    }),
 })

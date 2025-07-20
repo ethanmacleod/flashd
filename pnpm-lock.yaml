@@ -151,9 +151,15 @@ importers:
       '@gluestack-ui/pressable':
         specifier: ^0.1.23
         version: 0.1.23(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@gluestack-ui/slider':
+        specifier: ^0.1.32
+        version: 0.1.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@gluestack-ui/spinner':
         specifier: ^0.1.15
         version: 0.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@gluestack-ui/switch':
+        specifier: ^0.1.29
+        version: 0.1.29(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
       '@gluestack-ui/toast':
         specifier: ^1.0.9
         version: 1.0.9(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
@@ -1270,8 +1276,20 @@ packages:
       react: '>=16'
       react-dom: '>=16'
 
+  '@gluestack-ui/slider@0.1.32':
+    resolution: {integrity: sha512-g0e7dAGOYYARlL3cdHe3mhN71j85TnqUgK/xOYWjVDE0U+atIXxxTVEXeO0ZPGJ3YUOUUAInIVGaa0xvnjEkYg==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+
   '@gluestack-ui/spinner@0.1.15':
     resolution: {integrity: sha512-jkXOGhna05HM2tcPKbA+t+vqcVRgRowwC6ES0A9kY5fcuURH1V41UFx/YWyHdSsHwmWlIoCCdWycF78UbNVdPg==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+
+  '@gluestack-ui/switch@0.1.29':
+    resolution: {integrity: sha512-swx0J20ULpN+pkHg8KioWibZETWE/6XvCBckmApNZf9RO2MiHHkNMw4Txne4u1z0OyLKGzBW1dbmkhLIOObaXg==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
@@ -1540,8 +1558,20 @@ packages:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
+  '@react-aria/label@3.7.19':
+    resolution: {integrity: sha512-ZJIj/BKf66q52idy24ErzX77vDGuyQn4neWtu51RRSk4npI3pJqEPsdkPCdo2dlBCo/Uc1pfuLGg2hY3N/ni9Q==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+      react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
   '@react-aria/overlays@3.27.3':
     resolution: {integrity: sha512-1hawsRI+QiM0TkPNwApNJ2+N49NQTP+48xq0JG8hdEUPChQLDoJ39cvT1sxdg0mnLDzLaAYkZrgfokq9sX6FLA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+      react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@react-aria/slider@3.7.21':
+    resolution: {integrity: sha512-eWu69KnQ7qCmpYBEkgGLjIuKfFqoHu2W6r9d7ys0ZmX81HPj9DhatGpEgHlnjRfCeSl9wL5h2FY9wnIio82cbg==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
       react-dom: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
@@ -1587,6 +1617,12 @@ packages:
     peerDependencies:
       react: '*'
       react-dom: '*'
+      react-native: '*'
+
+  '@react-native-aria/slider@0.2.12':
+    resolution: {integrity: sha512-xh528Ddwyyl7MbTNGkTlQnzLId6xZ3mLPyT9bM/oQ2rGCFufL7cznKYk41QGBLaMBJ4n2ig0MAVIijoJU+/HkQ==}
+    peerDependencies:
+      react: '*'
       react-native: '*'
 
   '@react-native-aria/utils@0.2.12':
@@ -1731,6 +1767,16 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
+  '@react-stately/slider@3.6.5':
+    resolution: {integrity: sha512-XnHSHbXeHiE5J7nsXQvlXaKaNn1Z4jO1aQyiZsolK1NXW6VMKVeAgZUBG45k7xQW06aRbjREMmiIz02mW8fajQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@react-stately/toggle@3.8.5':
+    resolution: {integrity: sha512-BSvuTDVFzIKxpNg9Slf+RdGpva7kBO8xYaec2TW9m6Ag9AOmiDwUzzDAO0DRsc7ArSaLLFaQ/pdmmT6TxAUQIA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
   '@react-stately/utils@3.10.7':
     resolution: {integrity: sha512-cWvjGAocvy4abO9zbr6PW6taHgF24Mwy/LbQ4TC4Aq3tKdKDntxyD+sh7AkSRfJRT2ccMVaHVv2+FfHThd3PKQ==}
     peerDependencies:
@@ -1738,6 +1784,11 @@ packages:
 
   '@react-types/button@3.12.2':
     resolution: {integrity: sha512-QLoSCX8E7NFIdkVMa65TPieve0rKeltfcIxiMtrphjfNn+83L0IHMcbhjf4r4W19c/zqGbw3E53Hx8mNukoTUw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@react-types/checkbox@3.9.5':
+    resolution: {integrity: sha512-9y8zeGWT2xZ38/YC/rNd05pPV8W8vmqFygCpZFaa6dJeOsMgPU+rq+Ifh1G+34D/qGoZXQBzeCSCAKSNPaL7uw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
@@ -1753,6 +1804,11 @@ packages:
 
   '@react-types/shared@3.30.0':
     resolution: {integrity: sha512-COIazDAx1ncDg046cTJ8SFYsX8aS3lB/08LDnbkH/SkdYrFPWDlXMrO/sUam8j1WWM+PJ+4d1mj7tODIKNiFog==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
+
+  '@react-types/slider@3.7.12':
+    resolution: {integrity: sha512-kOQLrENLpQzmu6TfavdW1yfEc8VPitT4ZNMKOK0h7x3LskEWjptxcZ4IBowEpqHwk0eMbI9lRE/3tsShGUoLwQ==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
@@ -7016,10 +7072,36 @@ snapshots:
     transitivePeerDependencies:
       - react-native
 
+  '@gluestack-ui/slider@0.1.32(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@gluestack-ui/form-control': 0.1.19(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@gluestack-ui/hooks': 0.1.13(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@gluestack-ui/utils': 0.1.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@react-aria/visually-hidden': 3.8.25(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-native-aria/interactions': 0.2.16(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@react-native-aria/slider': 0.2.12(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@react-stately/slider': 3.6.5(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    transitivePeerDependencies:
+      - react-native
+
   '@gluestack-ui/spinner@0.1.15(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
+
+  '@gluestack-ui/switch@0.1.29(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@gluestack-ui/form-control': 0.1.19(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@gluestack-ui/utils': 0.1.15(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@react-native-aria/focus': 0.2.9(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@react-native-aria/interactions': 0.2.16(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@react-stately/toggle': 3.8.5(react@19.0.0)
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+    transitivePeerDependencies:
+      - react-native
 
   '@gluestack-ui/toast@1.0.9(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -7356,6 +7438,14 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
 
+  '@react-aria/label@3.7.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@react-aria/utils': 3.29.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-types/shared': 3.30.0(react@19.0.0)
+      '@swc/helpers': 0.5.17
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   '@react-aria/overlays@3.27.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
     dependencies:
       '@react-aria/focus': 3.20.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -7368,6 +7458,19 @@ snapshots:
       '@react-types/button': 3.12.2(react@19.0.0)
       '@react-types/overlays': 3.8.16(react@19.0.0)
       '@react-types/shared': 3.30.0(react@19.0.0)
+      '@swc/helpers': 0.5.17
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
+  '@react-aria/slider@3.7.21(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@react-aria/i18n': 3.12.10(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-aria/interactions': 3.25.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-aria/label': 3.7.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-aria/utils': 3.29.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-stately/slider': 3.6.5(react@19.0.0)
+      '@react-types/shared': 3.30.0(react@19.0.0)
+      '@react-types/slider': 3.7.12(react@19.0.0)
       '@swc/helpers': 0.5.17
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
@@ -7437,6 +7540,20 @@ snapshots:
       react: 19.0.0
       react-dom: 19.0.0(react@19.0.0)
       react-native: 0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
+
+  '@react-native-aria/slider@0.2.12(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      '@react-aria/focus': 3.20.5(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-aria/interactions': 3.25.3(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-aria/label': 3.7.19(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-aria/slider': 3.7.21(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-aria/utils': 3.29.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      '@react-native-aria/utils': 0.2.12(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)
+      '@react-stately/slider': 3.6.5(react@19.0.0)
+      react: 19.0.0
+      react-native: 0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0)
+    transitivePeerDependencies:
+      - react-dom
 
   '@react-native-aria/utils@0.2.12(react-dom@19.0.0(react@19.0.0))(react-native@0.79.4(@babel/core@7.28.0)(@types/react@19.0.14)(react@19.0.0))(react@19.0.0)':
     dependencies:
@@ -7674,12 +7791,33 @@ snapshots:
       '@swc/helpers': 0.5.17
       react: 19.0.0
 
+  '@react-stately/slider@3.6.5(react@19.0.0)':
+    dependencies:
+      '@react-stately/utils': 3.10.7(react@19.0.0)
+      '@react-types/shared': 3.30.0(react@19.0.0)
+      '@react-types/slider': 3.7.12(react@19.0.0)
+      '@swc/helpers': 0.5.17
+      react: 19.0.0
+
+  '@react-stately/toggle@3.8.5(react@19.0.0)':
+    dependencies:
+      '@react-stately/utils': 3.10.7(react@19.0.0)
+      '@react-types/checkbox': 3.9.5(react@19.0.0)
+      '@react-types/shared': 3.30.0(react@19.0.0)
+      '@swc/helpers': 0.5.17
+      react: 19.0.0
+
   '@react-stately/utils@3.10.7(react@19.0.0)':
     dependencies:
       '@swc/helpers': 0.5.17
       react: 19.0.0
 
   '@react-types/button@3.12.2(react@19.0.0)':
+    dependencies:
+      '@react-types/shared': 3.30.0(react@19.0.0)
+      react: 19.0.0
+
+  '@react-types/checkbox@3.9.5(react@19.0.0)':
     dependencies:
       '@react-types/shared': 3.30.0(react@19.0.0)
       react: 19.0.0
@@ -7697,6 +7835,11 @@ snapshots:
 
   '@react-types/shared@3.30.0(react@19.0.0)':
     dependencies:
+      react: 19.0.0
+
+  '@react-types/slider@3.7.12(react@19.0.0)':
+    dependencies:
+      '@react-types/shared': 3.30.0(react@19.0.0)
       react: 19.0.0
 
   '@rtsao/scc@1.1.0': {}

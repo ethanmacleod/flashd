@@ -10,7 +10,7 @@ datasource db {
 }
 
 model User {
-  id                 String       @id
+  id                 String          @id
   name               String
   email              String
   emailVerified      Boolean
@@ -25,6 +25,7 @@ model User {
   members            Member[]
   invitations        Invitation[]
   decks              Deck[]
+  reviewSessions     ReviewSession[]
 
   @@unique([email])
   @@map("user")
@@ -144,34 +145,72 @@ model Invitation {
 }
 
 model Deck {
-  id          String      @id @default(cuid())
-  title       String
-  description String?
-  color       String?     @default("#3b82f6")
-  isPublic    Boolean     @default(false)
-  userId      String
-  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  cards       Card[]
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id             String          @id @default(cuid())
+  title          String
+  description    String?
+  color          String?         @default("#3b82f6")
+  isPublic       Boolean         @default(false)
+  userId         String
+  user           User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cards          Card[]
+  reviewSessions ReviewSession[]
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
   @@map("deck")
 }
 
 model Card {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   front         String
   back          String
   hint          String?
-  difficulty    Int       @default(1)
+  difficulty    Int           @default(1)
   lastReviewed  DateTime?
   nextReview    DateTime?
-  reviewCount   Int       @default(0)
-  correctCount  Int       @default(0)
+  reviewCount   Int           @default(0)
+  correctCount  Int           @default(0)
+  isFavorite    Boolean       @default(false)
   deckId        String
-  deck          Deck      @relation(fields: [deckId], references: [id], onDelete: Cascade)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  deck          Deck          @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  reviews       ReviewLog[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
 
   @@map("card")
+}
+
+model ReviewSession {
+  id                String      @id @default(cuid())
+  deckId            String
+  deck              Deck        @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  userId            String
+  user              User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  totalCards        Int
+  reviewedCards     Int         @default(0)
+  correctAnswers    Int         @default(0)
+  skippedCards      Int         @default(0)
+  averageDifficulty Float?
+  startedAt         DateTime    @default(now())
+  completedAt       DateTime?
+  reviews           ReviewLog[]
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  @@map("review_session")
+}
+
+model ReviewLog {
+  id               String        @id @default(cuid())
+  cardId           String
+  card             Card          @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  reviewSessionId  String
+  reviewSession    ReviewSession @relation(fields: [reviewSessionId], references: [id], onDelete: Cascade)
+  difficulty       Int          
+  wasSkipped       Boolean       @default(false)
+  wasFavorited     Boolean       @default(false)
+  responseTime     Int?          
+  reviewedAt       DateTime      @default(now())
+
+  @@map("review_log")
 }

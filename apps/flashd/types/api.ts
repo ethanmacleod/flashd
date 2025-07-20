@@ -41,6 +41,19 @@ export type CardUpdateOutput = RouterOutputs['deck']['updateCard']
 export type CardDeleteInput = RouterInputs['deck']['deleteCard']
 export type CardDeleteOutput = RouterOutputs['deck']['deleteCard']
 
+// Review Types
+export type ReviewStartSessionInput = RouterInputs['deck']['startReviewSession']
+export type ReviewStartSessionOutput = RouterOutputs['deck']['startReviewSession']
+export type ReviewSubmitCardReviewInput = RouterInputs['deck']['submitCardReview']
+export type ReviewSubmitCardReviewOutput = RouterOutputs['deck']['submitCardReview']
+export type ReviewCompleteSessionInput = RouterInputs['deck']['completeReviewSession']
+export type ReviewCompleteSessionOutput = RouterOutputs['deck']['completeReviewSession']
+export type ReviewGetSessionStatsInput = RouterInputs['deck']['getReviewSessionStats']
+export type ReviewGetSessionStatsOutput = RouterOutputs['deck']['getReviewSessionStats']
+export type ReviewSessionStats = ReviewGetSessionStatsOutput
+export type ReviewGetDifficultCardsInput = RouterInputs['deck']['getDifficultCardsForRetry']
+export type ReviewGetDifficultCardsOutput = RouterOutputs['deck']['getDifficultCardsForRetry']
+
 // User Types
 export type User = NonNullable<AuthGetSessionOutput['user']>
 export type Session = NonNullable<AuthGetSessionOutput['session']>

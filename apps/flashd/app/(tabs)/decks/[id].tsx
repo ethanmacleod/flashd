@@ -10,8 +10,8 @@ import { HStack } from '@/components/ui/hstack'
 import { Pressable } from '@/components/ui/pressable'
 import { Text } from '@/components/ui/text'
 import { VStack } from '@/components/ui/vstack'
-import { trpc } from '@/lib/trpc'
 import { useCards } from '@/hooks/useCards'
+import { trpc } from '@/lib/trpc'
 import type { Card } from '@/types/api'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { EditIcon, PlayIcon, ShareIcon, Trash2Icon } from 'lucide-react-native'
@@ -72,7 +72,7 @@ export default function DeckDetailPage() {
   }
 
   const handleStudy = () => {
-    router.push(`/deck/${id}/study` as any)
+    router.push(`/decks/${id}/review`)
   }
 
   const handleShare = () => {
@@ -250,13 +250,13 @@ export default function DeckDetailPage() {
                               </Text>
                             </VStack>
                             <HStack className="space-x-3">
-                              <Pressable 
+                              <Pressable
                                 onPress={() => handleEditCard(card)}
                                 className="p-2 rounded-lg hover:bg-background-100 active:bg-background-200"
                               >
                                 <EditIcon size={24} color="#6b7280" />
                               </Pressable>
-                              <Pressable 
+                              <Pressable
                                 onPress={() => handleDeleteCard(card)}
                                 className="p-2 rounded-lg hover:bg-error-50 active:bg-error-100"
                               >
@@ -371,13 +371,13 @@ export default function DeckDetailPage() {
                           </Text>
                         </VStack>
                         <HStack className="space-x-3">
-                          <Pressable 
+                          <Pressable
                             onPress={() => handleEditCard(card)}
                             className="p-2 rounded-lg hover:bg-gray-100 active:bg-gray-200"
                           >
                             <EditIcon size={24} color="#6b7280" />
                           </Pressable>
-                          <Pressable 
+                          <Pressable
                             onPress={() => handleDeleteCard(card)}
                             className="p-2 rounded-lg hover:bg-red-50 active:bg-red-100"
                           >
