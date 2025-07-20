@@ -1,5 +1,5 @@
 import { AppModal } from '@/components/AppModal'
-import { Form, FormInput } from '@/components/forms'
+import { Form, FormMarkdownInput } from '@/components/forms'
 import { Button, ButtonText } from '@/components/ui/button'
 import { HStack } from '@/components/ui/hstack'
 import { VStack } from '@/components/ui/vstack'
@@ -24,12 +24,12 @@ interface CardEditModalProps {
   isLoading?: boolean
 }
 
-export function CardEditModal({ 
-  isOpen, 
-  onClose, 
-  onSubmit, 
-  card, 
-  isLoading = false 
+export function CardEditModal({
+  isOpen,
+  onClose,
+  onSubmit,
+  card,
+  isLoading = false
 }: CardEditModalProps) {
   const isEditing = !!card
   const title = isEditing ? 'Edit Card' : 'Add New Card'
@@ -65,31 +65,29 @@ export function CardEditModal({
           isLoading={isLoading}
           defaultValues={defaultValues}
         >
-          <FormInput
+          <FormMarkdownInput
             name="front"
             label="Question (Front of card)"
-            placeholder="Enter the question or prompt"
-            multiline
-            numberOfLines={3}
+            placeholder="Enter the question with **bold**, *italic*, ==highlight== etc."
+            rows={3}
+            helperText="Supports markdown formatting for rich text"
           />
 
-          <FormInput
+          <FormMarkdownInput
             name="back"
             label="Answer (Back of card)"
-            placeholder="Enter the answer or explanation"
-            multiline
-            numberOfLines={4}
+            placeholder="Enter the answer with formatting, `code`, > quotes etc."
+            rows={4}
+            helperText="Use markdown for better formatting and readability"
           />
 
-          <FormInput
+          <FormMarkdownInput
             name="hint"
             label="Hint (Optional)"
-            placeholder="Enter a helpful hint"
-            multiline
-            numberOfLines={2}
+            placeholder="Enter a helpful hint with formatting"
+            rows={2}
           />
 
-          {/* Custom buttons */}
           <HStack className="space-x-3 mt-6">
             <Button
               variant="outline"
@@ -99,8 +97,7 @@ export function CardEditModal({
             >
               <ButtonText>Cancel</ButtonText>
             </Button>
-            
-            {/* Preview functionality removed - forms handle validation directly */}
+
           </HStack>
         </Form>
       </VStack>

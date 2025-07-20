@@ -1,7 +1,7 @@
-import { CardEditModal } from '@/components/CardEditModal'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { EmptyState } from '@/components/EmptyState'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { MarkdownRenderer } from '@/components/markdown/MarkdownRenderer'
 import { BackButton } from '@/components/Shared'
 import { useToastNotifications } from '@/components/toast'
 import { Box } from '@/components/ui/box'
@@ -28,8 +28,6 @@ export default function DeckDetailPage() {
   const { id } = useLocalSearchParams<{ id: string }>()
   const { showError, showSuccess } = useToastNotifications()
 
-  const [cardEditModalOpen, setCardEditModalOpen] = useState(false)
-  const [editingCard, setEditingCard] = useState<Card | null>(null)
   const [showDeleteDeckDialog, setShowDeleteDeckDialog] = useState(false)
   const [showDeleteCardDialog, setShowDeleteCardDialog] = useState(false)
   const [deletingCard, setDeletingCard] = useState<Card | null>(null)
@@ -45,14 +43,8 @@ export default function DeckDetailPage() {
   )
 
   const {
-    createCard,
-    updateCard,
     deleteCard,
-    isCreating,
-    isUpdating,
     isDeleting,
-    createError,
-    updateError,
     deleteError,
   } = useCards(id!)
 
@@ -81,13 +73,11 @@ export default function DeckDetailPage() {
   }
 
   const handleAddCard = () => {
-    setEditingCard(null)
-    setCardEditModalOpen(true)
+    router.push(`/decks/${id}/create`)
   }
 
   const handleEditCard = (card: Card) => {
-    setEditingCard(card)
-    setCardEditModalOpen(true)
+    router.push(`/decks/${id}/edit/${card.id}`)
   }
 
   const handleDeleteCard = (card: Card) => {
@@ -95,29 +85,6 @@ export default function DeckDetailPage() {
     setShowDeleteCardDialog(true)
   }
 
-  const handleCardSubmit = async (data: { front: string; back: string; hint?: string }) => {
-    try {
-      if (editingCard) {
-        await updateCard({
-          id: editingCard.id,
-          ...data,
-        })
-        showSuccess({ title: 'Success', description: 'Card updated successfully' })
-      } else {
-        await createCard(data)
-        showSuccess({ title: 'Success', description: 'Card added successfully' })
-      }
-      setCardEditModalOpen(false)
-      setEditingCard(null)
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error'
-      if (editingCard) {
-        showError({ title: 'Error', description: updateError?.message ?? errorMessage })
-      } else {
-        showError({ title: 'Error', description: createError?.message ?? errorMessage })
-      }
-    }
-  }
 
   const cards = deck?.cards || []
   const totalPages = Math.ceil(cards.length / CARDS_PER_PAGE)
@@ -245,9 +212,10 @@ export default function DeckDetailPage() {
                         <Box key={card.id} className="bg-background-0 p-4 rounded-lg border border-outline-200">
                           <HStack className="items-start space-x-3">
                             <VStack className="flex-1">
-                              <Text className="font-medium text-typography-900 leading-relaxed">
-                                {card.front}
-                              </Text>
+                              <MarkdownRenderer 
+                                content={card.front}
+                                className="font-medium text-typography-900 leading-relaxed"
+                              />
                             </VStack>
                             <HStack className="space-x-3">
                               <Pressable
@@ -294,7 +262,7 @@ export default function DeckDetailPage() {
                   <EmptyState
                     title="No cards yet"
                     description="Add your first flashcard to get started"
-                    actionText="Add Card"
+                    actionText="Create Cards"
                     onAction={handleAddCard}
                   />
                 )}
@@ -366,9 +334,10 @@ export default function DeckDetailPage() {
                     <Box key={card.id} className="bg-white p-4 rounded-lg border border-gray-200">
                       <HStack className="items-start space-x-3">
                         <VStack className="flex-1">
-                          <Text className="font-medium text-gray-900 leading-relaxed">
-                            {card.front}
-                          </Text>
+                          <MarkdownRenderer 
+                            content={card.front}
+                            className="font-medium text-gray-900 leading-relaxed"
+                          />
                         </VStack>
                         <HStack className="space-x-3">
                           <Pressable
@@ -401,16 +370,6 @@ export default function DeckDetailPage() {
         </Box>
       </VStack>
 
-      <CardEditModal
-        isOpen={cardEditModalOpen}
-        onClose={() => {
-          setCardEditModalOpen(false)
-          setEditingCard(null)
-        }}
-        onSubmit={handleCardSubmit}
-        card={editingCard}
-        isLoading={isCreating || isUpdating}
-      />
 
       <ConfirmDialog
         isOpen={showDeleteDeckDialog}

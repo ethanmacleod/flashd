@@ -5,6 +5,7 @@ import { Dimensions } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { MarkdownRenderer } from '@/components/markdown/MarkdownRenderer'
 import { useToastNotifications } from '@/components/toast'
 import { Box } from '@/components/ui/box'
 import { Button, ButtonText } from '@/components/ui/button'
@@ -237,15 +238,17 @@ export default function ReviewPage() {
                   <Text className="text-sm font-medium text-primary-600 uppercase tracking-wide">
                     Question
                   </Text>
-                  <Text className="text-xl text-typography-900 leading-relaxed">
-                    {currentCard.front}
-                  </Text>
+                  <MarkdownRenderer 
+                    content={currentCard.front}
+                    className="text-xl text-typography-900 leading-relaxed"
+                  />
 
                   {currentCard.hint && (
                     <Box className="p-3 bg-tertiary-50 rounded-lg">
-                      <Text className="text-sm text-tertiary-700">
-                        💡 {currentCard.hint}
-                      </Text>
+                      <MarkdownRenderer 
+                        content={`💡 ${currentCard.hint}`}
+                        className="text-sm text-tertiary-700"
+                      />
                     </Box>
                   )}
                 </VStack>
@@ -257,9 +260,10 @@ export default function ReviewPage() {
                     <Text className="text-sm font-medium text-secondary-600 uppercase tracking-wide">
                       Answer
                     </Text>
-                    <Text className="text-xl text-typography-900 leading-relaxed">
-                      {currentCard.back}
-                    </Text>
+                    <MarkdownRenderer 
+                      content={currentCard.back}
+                      className="text-xl text-typography-900 leading-relaxed"
+                    />
                   </VStack>
                 </Box>
               )}
@@ -282,15 +286,17 @@ export default function ReviewPage() {
                   <Text className="text-sm font-medium text-primary-600 uppercase tracking-wide">
                     Question
                   </Text>
-                  <Text className="text-xl text-typography-900 leading-relaxed">
-                    {currentCard.front}
-                  </Text>
+                  <MarkdownRenderer 
+                    content={currentCard.front}
+                    className="text-xl text-typography-900 leading-relaxed"
+                  />
 
                   {currentCard.hint && (
                     <Box className="p-3 bg-tertiary-50 rounded-lg">
-                      <Text className="text-sm text-tertiary-700">
-                        💡 {currentCard.hint}
-                      </Text>
+                      <MarkdownRenderer 
+                        content={`💡 ${currentCard.hint}`}
+                        className="text-sm text-tertiary-700"
+                      />
                     </Box>
                   )}
                 </VStack>
@@ -302,9 +308,10 @@ export default function ReviewPage() {
                     <Text className="text-sm font-medium text-secondary-600 uppercase tracking-wide">
                       Answer
                     </Text>
-                    <Text className="text-xl text-typography-900 leading-relaxed">
-                      {currentCard.back}
-                    </Text>
+                    <MarkdownRenderer 
+                      content={currentCard.back}
+                      className="text-xl text-typography-900 leading-relaxed"
+                    />
                   </VStack>
                 </Box>
               )}
