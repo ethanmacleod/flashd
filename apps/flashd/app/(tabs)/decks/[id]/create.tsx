@@ -1,3 +1,4 @@
+import { ColorPicker } from '@/components/ColorPicker'
 import { MarkdownEditor } from '@/components/markdown/MarkdownEditor'
 import { MarkdownRenderer } from '@/components/markdown/MarkdownRenderer'
 import { BackButton } from '@/components/Shared'
@@ -9,6 +10,7 @@ import { ScrollView } from '@/components/ui/scroll-view'
 import { Text } from '@/components/ui/text'
 import { VStack } from '@/components/ui/vstack'
 import { trpc } from '@/lib/trpc'
+import { CARD_COLORS } from '@/lib/utility/constants'
 import { useLocalSearchParams } from 'expo-router'
 import { Plus, Save } from 'lucide-react-native'
 import React, { useState } from 'react'
@@ -25,6 +27,7 @@ export default function CreateCardPage() {
   const [front, setFront] = useState('')
   const [back, setBack] = useState('')
   const [hint, setHint] = useState('')
+  const [cardColor, setCardColor] = useState('default')
   const [showPreview, setShowPreview] = useState(false)
 
   const { data: deck } = trpc.deck.getDeck.useQuery({ id: id! }, { enabled: !!id })
@@ -35,6 +38,7 @@ export default function CreateCardPage() {
       setFront('')
       setBack('')
       setHint('')
+      setCardColor('default')
     },
     onError: (error) => {
       showError({ title: 'Error', description: error.message })
@@ -52,6 +56,7 @@ export default function CreateCardPage() {
       front: front.trim(),
       back: back.trim(),
       hint: hint.trim() || undefined,
+      color: cardColor,
     })
   }
 
@@ -110,10 +115,15 @@ export default function CreateCardPage() {
         <Box className="flex-1">
           {isDesktop ? (
             <HStack className="flex-1">
-              <VStack className="flex-1 p-6 space-y-6 border-r border-outline-200">
+              <VStack className="flex-1 p-6 space-y-6 border-r border-outline-200 max-w-2xl">
                 <Text className="text-xl font-semibold text-typography-900">
                   Create Card
                 </Text>
+
+                <ColorPicker
+                  selectedColor={cardColor}
+                  onColorChange={setCardColor}
+                />
 
                 <MarkdownEditor
                   value={front}
@@ -148,52 +158,66 @@ export default function CreateCardPage() {
                   </Button>
                 </HStack>
               </VStack>
-              <ScrollView>
+              <ScrollView className="flex-1">
                 <VStack className="flex-1 p-6 space-y-6 bg-background-0">
                   <Text className="text-xl font-semibold text-typography-900">
                     Preview
                   </Text>
 
-                  <VStack className="space-y-3">
-                    <Text className="text-sm font-medium text-primary-600 uppercase tracking-wide">
-                      Question
+                  <VStack className="space-y-4">
+                    <Text className="text-sm font-medium text-typography-600 uppercase tracking-wide">
+                      Card Preview
                     </Text>
-                    <Box className="min-h-[100px] p-4 bg-background-50 rounded-lg border border-outline-200">
-                      {front.trim() ? (
-                        <MarkdownRenderer content={front} />
-                      ) : (
-                        <Text className="text-typography-400 italic">
-                          Question preview will appear here...
-                        </Text>
-                      )}
+                    <Box className={`p-6 rounded-xl border-2 shadow-sm ${CARD_COLORS.find(c => c.id === cardColor)?.background || 'bg-background-0'} ${CARD_COLORS.find(c => c.id === cardColor)?.border || 'border-outline-200'}`}>
+                      <VStack className="space-y-4">
+                        <VStack className="space-y-3">
+                          <Text className="text-sm font-medium text-primary-600 uppercase tracking-wide">
+                            Question
+                          </Text>
+                          <Box className="min-h-[80px]">
+                            {front.trim() ? (
+                              <MarkdownRenderer content={front} />
+                            ) : (
+                              <Text className="text-typography-400 italic">
+                                Question preview will appear here...
+                              </Text>
+                            )}
+                          </Box>
+                        </VStack>
+
+                        <Box className="h-px bg-outline-200" />
+
+                        <VStack className="space-y-3">
+                          <Text className="text-sm font-medium text-secondary-600 uppercase tracking-wide">
+                            Answer
+                          </Text>
+                          <Box className="min-h-[80px]">
+                            {back.trim() ? (
+                              <MarkdownRenderer content={back} />
+                            ) : (
+                              <Text className="text-typography-400 italic">
+                                Answer preview will appear here...
+                              </Text>
+                            )}
+                          </Box>
+                        </VStack>
+
+                        {hint.trim() && (
+                          <>
+                            <Box className="h-px bg-outline-200" />
+                            <VStack className="space-y-3">
+                              <Text className="text-sm font-medium text-tertiary-600 uppercase tracking-wide">
+                                Hint
+                              </Text>
+                              <Box className="p-3 bg-tertiary-50 rounded-lg border border-tertiary-200">
+                                <MarkdownRenderer content={`💡 ${hint}`} className="text-sm text-tertiary-700" />
+                              </Box>
+                            </VStack>
+                          </>
+                        )}
+                      </VStack>
                     </Box>
                   </VStack>
-
-                  <VStack className="space-y-3">
-                    <Text className="text-sm font-medium text-secondary-600 uppercase tracking-wide">
-                      Answer
-                    </Text>
-                    <Box className="min-h-[120px] p-4 bg-background-50 rounded-lg border border-outline-200">
-                      {back.trim() ? (
-                        <MarkdownRenderer content={back} />
-                      ) : (
-                        <Text className="text-typography-400 italic">
-                          Answer preview will appear here...
-                        </Text>
-                      )}
-                    </Box>
-                  </VStack>
-
-                  {hint.trim() && (
-                    <VStack className="space-y-3">
-                      <Text className="text-sm font-medium text-tertiary-600 uppercase tracking-wide">
-                        Hint
-                      </Text>
-                      <Box className="p-3 bg-tertiary-50 rounded-lg border border-tertiary-200">
-                        <MarkdownRenderer content={`💡 ${hint}`} className="text-sm text-tertiary-700" />
-                      </Box>
-                    </VStack>
-                  )}
                 </VStack>
               </ScrollView>
             </HStack>
@@ -206,6 +230,11 @@ export default function CreateCardPage() {
                     <Text className="text-xl font-semibold text-typography-900">
                       Create Card
                     </Text>
+
+                    <ColorPicker
+                      selectedColor={cardColor}
+                      onColorChange={setCardColor}
+                    />
 
                     <MarkdownEditor
                       value={front}
@@ -243,46 +272,55 @@ export default function CreateCardPage() {
                       Preview
                     </Text>
 
-                    <VStack className="space-y-3">
-                      <Text className="text-sm font-medium text-primary-600 uppercase tracking-wide">
-                        Question
-                      </Text>
-                      <Box className="min-h-[100px] p-4 bg-background-0 rounded-lg border border-outline-200">
-                        {front.trim() ? (
-                          <MarkdownRenderer content={front} />
-                        ) : (
-                          <Text className="text-typography-400 italic">
-                            Question preview will appear here...
+                    <Box className={`p-4 rounded-xl border-2 shadow-sm ${CARD_COLORS.find(c => c.id === cardColor)?.background || 'bg-background-0'} ${CARD_COLORS.find(c => c.id === cardColor)?.border || 'border-outline-200'}`}>
+                      <VStack className="space-y-4">
+                        <VStack className="space-y-3">
+                          <Text className="text-sm font-medium text-primary-600 uppercase tracking-wide">
+                            Question
                           </Text>
-                        )}
-                      </Box>
-                    </VStack>
+                          <Box className="min-h-[80px]">
+                            {front.trim() ? (
+                              <MarkdownRenderer content={front} />
+                            ) : (
+                              <Text className="text-typography-400 italic">
+                                Question preview will appear here...
+                              </Text>
+                            )}
+                          </Box>
+                        </VStack>
 
-                    <VStack className="space-y-3">
-                      <Text className="text-sm font-medium text-secondary-600 uppercase tracking-wide">
-                        Answer
-                      </Text>
-                      <Box className="min-h-[120px] p-4 bg-background-0 rounded-lg border border-outline-200">
-                        {back.trim() ? (
-                          <MarkdownRenderer content={back} />
-                        ) : (
-                          <Text className="text-typography-400 italic">
-                            Answer preview will appear here...
+                        <Box className="h-px bg-outline-200" />
+
+                        <VStack className="space-y-3">
+                          <Text className="text-sm font-medium text-secondary-600 uppercase tracking-wide">
+                            Answer
                           </Text>
-                        )}
-                      </Box>
-                    </VStack>
+                          <Box className="min-h-[80px]">
+                            {back.trim() ? (
+                              <MarkdownRenderer content={back} />
+                            ) : (
+                              <Text className="text-typography-400 italic">
+                                Answer preview will appear here...
+                              </Text>
+                            )}
+                          </Box>
+                        </VStack>
 
-                    {hint.trim() && (
-                      <VStack className="space-y-3">
-                        <Text className="text-sm font-medium text-tertiary-600 uppercase tracking-wide">
-                          Hint
-                        </Text>
-                        <Box className="p-3 bg-tertiary-50 rounded-lg border border-tertiary-200">
-                          <MarkdownRenderer content={`💡 ${hint}`} className="text-sm text-tertiary-700" />
-                        </Box>
+                        {hint.trim() && (
+                          <>
+                            <Box className="h-px bg-outline-200" />
+                            <VStack className="space-y-3">
+                              <Text className="text-sm font-medium text-tertiary-600 uppercase tracking-wide">
+                                Hint
+                              </Text>
+                              <Box className="p-3 bg-tertiary-50 rounded-lg border border-tertiary-200">
+                                <MarkdownRenderer content={`💡 ${hint}`} className="text-sm text-tertiary-700" />
+                              </Box>
+                            </VStack>
+                          </>
+                        )}
                       </VStack>
-                    )}
+                    </Box>
                   </>
                 )}
               </VStack>

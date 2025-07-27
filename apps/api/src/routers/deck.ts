@@ -203,6 +203,7 @@ export const deckRouter = router({
         front: z.string().min(1).max(500),
         back: z.string().min(1).max(1000),
         hint: z.string().optional(),
+        color: z.string().optional(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -218,6 +219,7 @@ export const deckRouter = router({
           front: input.front,
           back: input.back,
           hint: input.hint,
+          color: input.color,
           deckId: input.deckId,
         },
       })

@@ -21,6 +21,7 @@ import { AppModal } from '@/components/AppModal'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { EmptyState } from '@/components/EmptyState'
 import { LoadingSpinner } from '@/components/LoadingSpinner'
+import { DECK_COLORS } from '@/lib/utility/constants'
 import type { Deck, DeckCreateInput } from '@/types/api'
 
 // Deck creation schema
@@ -32,17 +33,6 @@ const deckSchema = z.object({
 })
 
 type DeckFormData = z.infer<typeof deckSchema>
-
-const DECK_COLORS = [
-  'rgb(var(--color-primary-500))', // Coral Pink
-  'rgb(var(--color-secondary-500))', // Rose
-  'rgb(var(--color-tertiary-500))', // Peachy Coral
-  'rgb(var(--color-info-500))', // Blue
-  'rgb(var(--color-success-500))', // Green
-  'rgb(var(--color-warning-500))', // Orange
-  'rgb(var(--color-primary-300))', // Light Coral
-  'rgb(var(--color-secondary-300))', // Light Rose
-]
 
 interface DeckCardProps {
   deck: Deck

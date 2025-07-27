@@ -25,7 +25,7 @@ interface FormInputProps {
     label: string
     placeholder?: string
     helperText?: string
-    type?: 'text' | 'password' | 'email'
+    type?: 'text' | 'password'
     autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters'
     keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad'
     multiline?: boolean

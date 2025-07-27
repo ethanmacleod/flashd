@@ -26,6 +26,7 @@ model User {
   invitations        Invitation[]
   decks              Deck[]
   reviewSessions     ReviewSession[]
+  customColors       CustomColor[]
 
   @@unique([email])
   @@map("user")
@@ -165,6 +166,7 @@ model Card {
   front         String
   back          String
   hint          String?
+  color         String?       @default("default")
   difficulty    Int           @default(1)
   lastReviewed  DateTime?
   nextReview    DateTime?
@@ -213,4 +215,16 @@ model ReviewLog {
   reviewedAt       DateTime      @default(now())
 
   @@map("review_log")
+}
+
+model CustomColor {
+  id        String   @id @default(cuid())
+  name      String
+  value     String   
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("custom_color")
 }
